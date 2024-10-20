@@ -33,6 +33,30 @@ app.get('/items/:name', async (req, res) => {
     }
 })
 
+app.get('/items', async (req, res) => {
+    const order = req.query.order;
+
+    if (order == undefined) {
+        return res.status(400).json({ message: "Order of results not specified" });
+    } else if (order !== 'name' && order !== '-name') {
+        return res.status(400).json({ message: "Invalid option for result order, should be one of 'name' or '-name'" });
+    }
+
+    try {
+        const items = await database.manyOrNone('SELECT * FROM item')
+
+        if (order === 'name') {
+            items.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (order === '-name') {
+            items.sort((a, b) => b.name.localeCompare(a.name))
+        };
+
+        return res.status(200).json(items)
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
+    }
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
