@@ -1,0 +1,21 @@
+{
+  "name": "dev-con",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "server": "node --env-file=.env app.js",
+    "test": "jest --env-file=.env"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "pg-promise": "^11.10.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}
